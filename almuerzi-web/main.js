@@ -5,7 +5,12 @@ const stringToHtml = (s) => {
 }
 
 const renderItem = (item) =>{
-  return stringToHtml(`<li data-id="${item._id}">${item.name}</li>`)
+
+  const element = stringToHtml(`<li data-id="${item._id}">${item.name}</li>`)
+  element.addEventListener('click', ()=>{
+    element.classList.add('selected')
+  })
+  return element
 }
 
 window.onload = () => {
