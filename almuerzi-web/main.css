@@ -30,7 +30,12 @@ ul{
   padding: 10px 15px;
   border:solid 0px;
   margin:15px;
-  margin-left: 38px
+  margin-left: 38px;
+}
+
+
+#submit:disabled{
+  background-color: #ccc;
 }
 
 /* #submit:hover{
