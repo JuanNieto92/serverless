@@ -38,6 +38,13 @@ ul{
   background-color: #ccc;
 }
 
+#meals-list li{
+  cursor:pointer;
+}
+.selected{
+  background-color: #eee;
+}
+
 /* #submit:hover{
   background-color: #076892;
 } */
