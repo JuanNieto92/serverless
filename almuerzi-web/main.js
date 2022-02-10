@@ -18,6 +18,21 @@ const renderItem = (item) =>{
 }
 
 window.onload = () => {
+  const orderForm = document.getElementById('order')
+  orderForm.onsubmit = (e) =>{
+    e.preventDefault()
+    const mealId = document.getElementById('meals-id')
+    const mealIdValue  = mealId.value
+    if(!mealId.value){
+      alert('Debe seleccionar un plato')
+      return
+    }
+
+    const order = {
+      meal_id: mealIdValue,
+      user_id: 'Juan Nieto',
+    }
+  }
   fetch('https://serverless-juannieto92.vercel.app/api/meals')
     .then(response => response.json())
     .then(data => {
