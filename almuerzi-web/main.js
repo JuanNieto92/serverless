@@ -1,3 +1,5 @@
+let mealsState = []
+
 const stringToHtml = (s) => {
   const parser = new DOMParser()
   const doc = parser.parseFromString(s, 'text/html')
@@ -27,6 +29,8 @@ window.onload = () => {
   const orderForm = document.getElementById('order')
   orderForm.onsubmit = (e) =>{
     e.preventDefault()
+    const submit = document.getElementById('submit')
+    submit.setAttribute('disabled',true)
     const mealId = document.getElementById('meals-id')
     const mealIdValue  = mealId.value
     if(!mealId.value){
@@ -36,7 +40,7 @@ window.onload = () => {
 
     const order = {
       meal_id: mealIdValue,
-      user_id: 'Nicole Muñoz',
+      user_id: 'Juan Nieto',
     }
     fetch('https://serverless-juannieto92.vercel.app/api/orders',{
       method: 'POST',
@@ -44,11 +48,18 @@ window.onload = () => {
         'Content-Type': 'application/json', 
       },
       body: JSON.stringify(order)
-    }).then(x => console.log(x))
+    }).then(x => x.json())
+      .then(respuesta => {
+        const renderedOrder = renderOrder(respuesta,mealsState)
+        const ordersList = document.getElementById('orders-list')
+        ordersList.appendChild(renderedOrder)
+        submit.removeAttribute('disabled')
+      })
   }
   fetch('https://serverless-juannieto92.vercel.app/api/meals')
     .then(response => response.json())
     .then(data => {
+      mealsState = data
       const mealsList = document.getElementById('meals-list')
       const submit = document.getElementById('submit')
       const listItems = data.map(renderItem)
