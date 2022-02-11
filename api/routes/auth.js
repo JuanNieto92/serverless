@@ -29,7 +29,20 @@ router.post('/Register',(req,res) =>{
 })
 
 router.post('/login',(req,res) =>{
-  res.send('soy login')
+  const {email,password} = req.body
+  Users.findOne({email}).exec()
+    .then(user => {
+      if(!user){
+        return res.send('usuario y/o contraseña incorrecta')
+      }
+      crypto.pbkdf2(password,user.salt,10000,64,'sha1',(erro,key) =>{
+        const encriptedPass = key.toString('base64')
+        if(user.password === encriptedPass){
+          const token = signToken(user._id)
+          return res.send({token})
+        }
+      })
+    })
 })
 
 module.exports =  router
