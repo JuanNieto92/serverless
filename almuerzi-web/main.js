@@ -17,6 +17,12 @@ const renderItem = (item) =>{
   return element
 }
 
+const renderOrder = (order,meals) =>{
+  const meal = meals.find(meal => meal._id === order.meal_id)
+  const element = stringToHtml(`<li data-id="${order._id}">${meal.name} - ${order.user_id}</li>`)
+  return element
+}
+
 window.onload = () => {
   const orderForm = document.getElementById('order')
   orderForm.onsubmit = (e) =>{
@@ -49,5 +55,13 @@ window.onload = () => {
       mealsList.removeChild(mealsList.firstElementChild)
       listItems.forEach(element => mealsList.appendChild(element))
       submit.removeAttribute('disabled')
+      fetch('https://serverless-juannieto92.vercel.app/api/orders')
+        .then(response => response.json())
+        .then(ordersData => {
+          const orderList = document.getElementById('orders-list')
+          const listOrders = ordersData.map(orderData => renderOrder(orderData,data))
+          orderList.removeChild(orderList.firstElementChild)
+          listOrders.forEach(element => orderList.appendChild(element))
+        })
     })
 }
