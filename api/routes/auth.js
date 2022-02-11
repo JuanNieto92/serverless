@@ -41,6 +41,7 @@ router.post('/login',(req,res) =>{
           const token = signToken(user._id)
           return res.send({token})
         }
+        return res.send('usuario y/o contraseña incorrecta')
       })
     })
 })
