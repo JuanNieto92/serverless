@@ -30,8 +30,15 @@ window.onload = () => {
 
     const order = {
       meal_id: mealIdValue,
-      user_id: 'Juan Nieto',
+      user_id: 'Nicole Muñoz',
     }
+    fetch('https://serverless-juannieto92.vercel.app/api/orders',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', 
+      },
+      body: JSON.stringify(order)
+    }).then(x => console.log(x))
   }
   fetch('https://serverless-juannieto92.vercel.app/api/meals')
     .then(response => response.json())
